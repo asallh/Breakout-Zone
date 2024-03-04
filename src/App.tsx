@@ -1,5 +1,6 @@
 import "./App.css";
-import styled from "styled-components";
+import NavBar from "./components/NavBar";
+import Home from "./components/HomeContent";
 
 export default function App() {
   const title = "Welcome to Breakout Zone";
@@ -8,7 +9,9 @@ export default function App() {
       <div className="app">
         <div className="content">
           <h1 className="heading-title">{title}</h1>
+          <NavBar />
           <h2 className="sub-heading">See you soon.</h2>
+          <Home />
         </div>
       </div>
     </>
