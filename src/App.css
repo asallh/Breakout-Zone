@@ -40,3 +40,21 @@
 .read-the-docs {
   color: #888;
 }
+
+.heading-title{
+  font-family: bauer;
+}
+
+.sub-heading{
+  font-family: popins;
+}
+@font-face {
+  font-family: bauer;
+  src: url(src/assets/fonts/BAUERG__.woff);
+}
+
+@font-face {
+  font-family: popins;
+  src: url(src/assets/fonts/Poppins-Regular.ttf);
+}
+
