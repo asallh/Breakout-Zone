@@ -1,7 +1,6 @@
 import "./index.css";
 import NavBar from "./components/NavBar";
 import Home from "./components/HomeContent";
-import { Switch } from "./components/ui/switch";
 
 export default function App() {
   const title = "Welcome to Breakout Zone";
