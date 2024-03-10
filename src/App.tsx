@@ -7,9 +7,9 @@ export default function App() {
   return (
     <div className="app">
       <div className="content">
-        <h1 className="heading-title">{title}</h1>
+        <h1 className="font-bauer">{title}</h1>
         <NavBar />
-        <h2 className="sub-heading">See you soon.</h2>
+        <h2 className="font-bauer">See you soon.</h2>
         <Home />
       </div>
     </div>
