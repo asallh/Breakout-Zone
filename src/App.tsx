@@ -1,15 +1,15 @@
 import "./index.css";
-import NavBar from "./components/NavBar";
 import Home from "./components/HomeContent";
+import NavBar from "./components/NavBar";
 
 export default function App() {
-  const title = "Welcome to Breakout Zone";
+  const title = "Breakout Zone";
   return (
     <div className="app">
-      <div className="content">
-        <h1 className="font-bauer">{title}</h1>
+      <div className="">
+        {/* Team Selection Bar */}
         <NavBar />
-        <h2 className="font-bauer">See you soon.</h2>
+        {/* Where the cards get rendered */}
         <Home />
       </div>
     </div>
