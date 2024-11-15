@@ -1,0 +1,1 @@
+Hopefully this will be a project that i will be able to get regularly updated details hockey with machine learning integration but lets see 💀
