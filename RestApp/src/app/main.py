@@ -3,10 +3,14 @@ import uvicorn
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+from app.app_constants import Constants
 
 # MongoDB URI (using environment variable or default connection string)
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://nhlUser:nhlPassword@localhost:27017/NHL?directConnection=true")
-
+MONGO_URI = "mongodb://{}:{}@{}:{}/{}".format(Constants.get_mongo_username(),
+                                                      Constants.get_mongo_password(),
+                                                      Constants.get_mongo_host(),
+                                                      Constants.get_mongo_port(),
+                                                      Constants.get_environment())
 # MongoDB client
 client = AsyncIOMotorClient(MONGO_URI)
 
