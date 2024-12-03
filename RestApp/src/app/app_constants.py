@@ -1,11 +1,12 @@
 import configparser
 import os
 
-
 class Constants:
-
     LOGGER_DEFAULT = "NHL API LOGGER"
-    config = configparser.ConfigParser
+    config = configparser.ConfigParser()
+    script_dir = os.path.dirname(os.path.realpath(__file__))
+    ini_path= os.path.join(script_dir, 'app.ini')
+    config.read(ini_path)
 
     @classmethod
     def get_mongo_instance(cls):
@@ -32,15 +33,21 @@ class Constants:
 
     @classmethod
     def get_mongo_database(cls):
-       return (os.getenv("mongodb_database", cls.config[cls.get_environment()]["mongodb_database"])
+       return os.getenv("mongodb_database", cls.config[cls.get_environment()]["mongodb_database"])
 
-    @classmethod)
+    @classmethod
+    def get_mongo_password(cls):
+        env_mongo_password = os.getenv('mongodb_password')
+        if env_mongo_password is None:
+            raise EnvironmentError("Environment variable mongodb_password not found")
+        return env_mongo_password
+
+    @classmethod
     def get_mongo_attributes(cls):
        return os.getenv("mongodb_attributes", cls.config[cls.get_environment()]["mongodb_attributes"])
 
     @classmethod
-    def get_mongo_password(cls):
-        env_mongo_password = os.getenv('MONGO_PASSWORD')
-        if env_mongo_password is None:
-            raise EnvironmentError("Environment variable MONGO_PASSWORD not found")
-        return env_mongo_password
+    def get_mongo_endpoint(cls):
+        mongo_endpoint = (f"{Constants.get_mongo_host()}:{Constants.get_mongo_port()}/"
+                          f"{Constants.get_mongo_database()}")
+        return mongo_endpoint

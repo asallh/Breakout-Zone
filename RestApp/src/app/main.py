@@ -10,7 +10,8 @@ MONGO_URI = "mongodb://{}:{}@{}:{}/{}".format(Constants.get_mongo_username(),
                                                       Constants.get_mongo_password(),
                                                       Constants.get_mongo_host(),
                                                       Constants.get_mongo_port(),
-                                                      Constants.get_environment())
+                                                      Constants.get_mongo_database())
+
 # MongoDB client
 client = AsyncIOMotorClient(MONGO_URI)
 
@@ -32,7 +33,19 @@ app = FastAPI(lifespan=lifespan)
 @app.get("/")
 async def root():
     return {"message": "MongoDB Ping Test Passed!"}
+@app.get("/api/ping")
+async def ping():
+    return {"msg": "pong", "Environment": Constants.get_environment(), "database": Constants.get_mongo_endpoint()}
 
 if __name__ == "__main__":
     # Run the Uvicorn server directly from the script
-    uvicorn.run("src.main:app", host="0.0.0.0", port=8000, reload=True)
+    print("MongoDB URI:", MONGO_URI)
+    print("Environment:", Constants.get_environment())
+    print("Mongo Host:", Constants.get_mongo_host())
+    print("Mongo Port:", Constants.get_mongo_port())
+    print("Mongo Username:", Constants.get_mongo_username())
+    print("Mongo Database:", Constants.get_mongo_database())
+    print("Mongo Attributes:", Constants.get_mongo_attributes())
+
+    print("Starting Uvicorn server...")
+    uvicorn.run("src.app.main:app", host="0.0.0.0", port=8000, reload=True)
