@@ -16,3 +16,9 @@ class PlayerMasterDocument(Document):
 
     class Settings:
         name = "players"
+
+    # @classmethod
+    # def collection(cls):
+    #     client = AsyncIOMotorClient("mongodb://username:password@host:port/database")
+    #     db = client.get_database("database")
+    #     return db.get_collection("players")
