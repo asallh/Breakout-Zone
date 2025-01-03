@@ -1,9 +1,16 @@
 from contextlib import asynccontextmanager
+from venv import logger
+
 import uvicorn
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
+
+from starlette.middleware.cors import CORSMiddleware
+
 from app.app_constants import Constants
+from app.connectors.database_odm import init_db
+from app.routers.v1 import players as v1_players
 
 # MongoDB URI (using environment variable or default connection string)
 MONGO_URI = "mongodb://{}:{}@{}:{}/{}".format(Constants.get_mongo_username(),
@@ -22,6 +29,11 @@ async def lifespan(app: FastAPI):
         # Ping MongoDB server on startup
         await client.admin.command("ping")
         print("MongoDB connected successfully")
+        logger.info("starting up BreakoutZone REST")
+        logger.info("Current Environment context: {}".format(Constants.get_environment()))
+        logger.debug("Waiting for database to be available...")
+        await init_db()
+        # logger.info("Database connection established")
         yield
     except Exception as e:
         print(f"Error connecting to MongoDB: {e}")
@@ -30,12 +42,26 @@ async def lifespan(app: FastAPI):
 # Create the FastAPI app instance and pass the lifespan context
 app = FastAPI(lifespan=lifespan)
 
+app.include_router(v1_players.router, prefix="/api/v1/players")
+
+# origins = [
+#     "*"
+# ]
+#
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
 @app.get("/")
 async def root():
     return {"message": "MongoDB Ping Test Passed!"}
 @app.get("/api/ping")
 async def ping():
-    return {"msg": "pong", "Environment": Constants.get_environment(), "database": Constants.get_mongo_endpoint()}
+    return {"msg": "pong", "Environment": Constants.get_environment()}
 
 if __name__ == "__main__":
     # Run the Uvicorn server directly from the script

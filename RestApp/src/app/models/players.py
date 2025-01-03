@@ -1,11 +1,12 @@
 from beanie import Document
+from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any
 
 class SeasonStats(BaseModel):
     NHL: Dict[str, Any] = {}
 
-class Player(Document):
+class PlayerMasterDocument(Document):
     first: str
     last: str
     sweater: int
@@ -14,4 +15,4 @@ class Player(Document):
     career_totals: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     class Settings:
-        collection = "players"  # MongoDB collection name
+        name = "players"

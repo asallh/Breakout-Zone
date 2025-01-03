@@ -8,6 +8,9 @@ class Constants:
     ini_path= os.path.join(script_dir, 'app.ini')
     config.read(ini_path)
 
+    # MongoDB Constants
+    COLLECTION_PLAYERS = "players"
+
     @classmethod
     def get_mongo_instance(cls):
         return cls.get_mongo_host() + ":" + cls.get_mongo_port()
@@ -34,6 +37,14 @@ class Constants:
     @classmethod
     def get_mongo_database(cls):
        return os.getenv("mongodb_database", cls.config[cls.get_environment()]["mongodb_database"])
+
+    @classmethod
+    def get_mongodb_admin_username(cls):
+        return os.getenv("mongodb_admin")
+
+    @classmethod
+    def get_mongodb_admin_password(cls):
+        return os.getenv("mongodb_password")
 
     @classmethod
     def get_mongo_password(cls):
