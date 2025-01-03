@@ -7,7 +7,7 @@ from app.models.players import SeasonStats
 router = APIRouter()
 
 
-@router.post("/players/", response_model=PlayerMasterDocument)
+@router.post("/", response_model=PlayerMasterDocument)
 async def create_player(player: PlayerMasterDocument):
     if player.team and not await Team.find_one(Team.name == player.team):
         raise HTTPException(status_code=404, detail="Team not found")
@@ -38,6 +38,5 @@ async def test_insert():
         season_totals=SeasonStats(NHL={"goals": 30, "assists": 40}),
         career_totals={"NHL": {"goals": 100, "assists": 150}}
     )
-    collection = PlayerMasterDocument.collection()
-    await  collection.insert_one(test_player.dict())
+    await test_player.insert()
     return test_player
