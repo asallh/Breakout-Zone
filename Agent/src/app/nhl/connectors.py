@@ -49,3 +49,9 @@ class NhlConnector:
             return response.json()
         else:
             raise Exception(f"Failed to fetch roster for {team_abbr}")
+
+    def get_all_athletes(cls, collector):
+        athletes = []
+        for team in self.teams:
+            athletes.append(self.get_team_roster(self.teams[team]))
+        return athletes

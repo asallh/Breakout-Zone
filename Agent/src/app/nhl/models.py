@@ -67,4 +67,10 @@ class PlayerModel:
         packet = self.to_json()
         print(packet)
 
+    def debug(self):
+        print(f"PlayerId: {self.player_id}")
+        print(f"Name: {self.name}")
+        print(f"Team: {self.team}")
+
+
 
