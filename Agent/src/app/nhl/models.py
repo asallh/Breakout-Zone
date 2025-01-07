@@ -11,66 +11,19 @@ class PlayerModel:
         self.career = career
         self.season = season
 
-
     def to_json(self):
-        packet = {
-            "PlayerId": "",
-            "Name": "",
-            "Team": "",
-            "Headshot": "",
-            "Position": "",
-            "Height": "",
-            "Weight": "",
-            "Age": "",
-            "career": {
-                "assists": "",
-                "gameWinningGoals": "",
-                "gamesPlayed": "",
-                "goals": "",
-                "otGoals": "",
-                "pim": "",
-                "plusMinus": "",
-                "points": "",
-                "powerPlayGoals": "",
-                "powerPlayPoints": "",
-                "shootingPctg": "",
-                "shorthandedGoals": "",
-                "shorthandedPoints": "",
-                "shots": ""
-            },
-            "20232024": {
-                "assists": "",
-                "avgToi": "",
-                "faceoffWinningPctg": "",
-                "gameTypeId": "",
-                "gameWinningGoals": "",
-                "gamesPlayed": "",
-                "goals": "",
-                "leagueAbbrev": "",
-                "otGoals": "",
-                "pim": "",
-                "plusMinus": "",
-                "points": "",
-                "powerPlayGoals": "",
-                "powerPlayPoints": "",
-                "season": "",
-                "sequence": "",
-                "shootingPctg": "",
-                "shorthandedGoals": "",
-                "shorthandedPoints": "",
-                "shots": "",
-            }
+        return {
+            "PlayerId": self.player_id,
+            "Name": self.name,
+            "Team": self.team,
+            "Headshot": self.headshot,
+            "Position": self.position,
+            "Height": self.height,
+            "Weight": self.weight,
+            "Age": self.age,
+            "Career Stats": self.career,
+            "Season Stats": self.season
         }
-        return packet
-
-    def print_json(self):
-        packet = self.to_json()
-        print(packet)
 
     def debug(self):
-        print(f"PlayerId: {self.player_id}")
-        print(f"Name: {self.name}")
-        print(f"Team: {self.team}")
-
-
-
+        print(self.to_json())
