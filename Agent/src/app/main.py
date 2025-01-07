@@ -16,6 +16,8 @@ logging.basicConfig(
     ]
 )
 
+logger = logging.getLogger(__name__)
+
 def job_start():
     print(f"Staring job at {datetime.now()}")
 
@@ -25,12 +27,10 @@ def player_collection_job():
 
 def run_get_player_stats():
     connector = NhlConnector()
-    players_stats = connector.get_player_stats(None)  # Pass None or appropriate collector instance
-    for player in players_stats:
-        print(player.to_json())
-
-
-logging = logging.getLogger(__name__)
+    players_stats = connector.get_player_stats()  # Pass None or appropriate collector instance
+    logger.info(players_stats)
+    # for player in players_stats:
+    #     print(player.to_json())
 
 def main():
     scheduler = BlockingScheduler()

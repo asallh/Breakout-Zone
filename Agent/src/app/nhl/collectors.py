@@ -20,7 +20,9 @@ class NhlCollectorBase:
 class PlayerCollector(NhlCollectorBase):
     def __init__(self):
         super().__init__()
+
     def collect_and_send(self):
         players = self.nhl_connector.get_player_stats()
-        for player in players:
-            logger.info(player.to_json())
+        logger.info(players)
+        # for player in players:
+        #     logger.info(player.to_json())

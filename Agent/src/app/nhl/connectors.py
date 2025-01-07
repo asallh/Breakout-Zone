@@ -47,7 +47,7 @@ class NhlConnector:
 
     @classmethod
     def get_player_stats(cls):
-        players = "String 1"
+        players = "This is a test string"
         # for team_name, team_abbr in cls.teams.items():
         #     roster_url = cls.teams_url.format(team_abbr)
         #     try:
