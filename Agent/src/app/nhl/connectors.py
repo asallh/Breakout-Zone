@@ -1,4 +1,5 @@
 from venv import logger
+
 import requests
 
 from app.app_config import Constants
@@ -73,6 +74,22 @@ class NhlConnector:
                         if player_data:
                             logger.info(
                                 f"Successfully fetched player data for Skater: {skater['firstName']['default']} {skater['lastName']['default']}")
+                            player_model = PlayerModel(
+                                player_id=player_data.get("playerId"),
+                                name=f"{player_data.get('firstName')['default']} {player_data.get('lastName')['default']}",
+                                team=team,
+                                headshot=player_data.get("headshot"),
+                                hero=player_data.get("hero"),
+                                position=player_data.get("position"),
+                                height=player_data.get("heightInInches"),
+                                weight=player_data.get("weightInPounds"),
+                                career=player_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
+                                season=player_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
+                            )
+                            print(player_model.to_json())
+                            # Sending to DB
+                            collector.send(player_model, Constants.get_players_rest_endpoint())
+
                         else:
                             logger.error(f"Failed to fetch data for Skater with playerId {player_id}")
 
@@ -81,17 +98,27 @@ class NhlConnector:
                     player_id = goalie.get("playerId")
                     if player_id:
                         goalie_data = cls.get_player_data(player_id)
-                        if player_data:
+                        if goalie_data:
                             logger.info(
                                 f"Successfully fetched player data for goalie: {goalie['firstName']['default']} {goalie['lastName']['default']}")
+                            player_model = PlayerModel(
+                                player_id=goalie_data.get("playerId"),
+                                name=f"{goalie_data.get('firstName')['default']} {goalie_data.get('lastName')['default']}",
+                                team=team,
+                                headshot=goalie_data.get("headshot"),
+                                hero=goalie_data.get("hero"),
+                                position=goalie_data.get("position"),
+                                height=goalie_data.get("heightInInches"),
+                                weight=goalie_data.get("weightInPounds"),
+                                career=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
+                                season=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
+                            )
+                            print(player_model.to_json())
+                            # Sending to DB
+                            collector.send(player_model, Constants.get_players_rest_endpoint())
                         else:
                             logger.error(f"Failed to fetch data for Skater with playerId {player_id}")
 
-
-                # player_model = PlayerModel(player_id, name, team, headshot, position, height, weight, age)
-
-                # Sending collected model to the database
-                # collector.send(player_model, Constants.get_players_rest_endpoint())
             else:
                 logger.error(f"Error getting team data {team}, {teams_response.status_code}")
-            print(f"Teams count: {teams_count}")
+        print(f"Teams count: {teams_count}")
