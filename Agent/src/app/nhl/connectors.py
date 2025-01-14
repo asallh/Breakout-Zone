@@ -79,7 +79,7 @@ class NhlConnector:
                                 name=f"{player_data.get('firstName')['default']} {player_data.get('lastName')['default']}",
                                 team=team,
                                 headshot=player_data.get("headshot"),
-                                hero=player_data.get("hero"),
+                                hero=player_data.get("heroImage"),
                                 position=player_data.get("position"),
                                 height=player_data.get("heightInInches"),
                                 weight=player_data.get("weightInPounds"),
