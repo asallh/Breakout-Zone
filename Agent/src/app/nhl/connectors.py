@@ -81,12 +81,12 @@ class NhlConnector:
                                 headshot=player_data.get("headshot"),
                                 hero=player_data.get("heroImage"),
                                 position=player_data.get("position"),
+                                sweater=player_data.get("sweaterNumber"),
                                 height=player_data.get("heightInInches"),
                                 weight=player_data.get("weightInPounds"),
                                 career=player_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
                                 season=player_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
                             )
-                            print(player_model.to_json())
                             # Sending to DB
                             collector.send(player_model, Constants.get_players_rest_endpoint())
 
@@ -113,7 +113,6 @@ class NhlConnector:
                                 career=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
                                 season=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
                             )
-                            print(player_model.to_json())
                             # Sending to DB
                             collector.send(player_model, Constants.get_players_rest_endpoint())
                         else:

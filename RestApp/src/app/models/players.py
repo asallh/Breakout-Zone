@@ -7,12 +7,17 @@ class SeasonStats(BaseModel):
     NHL: Dict[str, Any] = {}
 
 class PlayerMasterDocument(Document):
-    first: str
-    last: str
+    player_id: str
+    name: str
+    team: str
+    headshot: str
+    hero: str
+    position: str
     sweater: int
-    team: Optional[str]  # References Team name or ObjectId if using relations
-    season_totals: Optional[SeasonStats] = Field(default_factory=SeasonStats)
+    height: int
+    weight: int
     career_totals: Optional[Dict[str, Any]] = Field(default_factory=dict)
+    season_totals: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
     class Settings:
         name = "players"

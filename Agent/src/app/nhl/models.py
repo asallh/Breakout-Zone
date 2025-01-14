@@ -1,11 +1,12 @@
 class PlayerModel:
-    def __init__(self, player_id, name, team, headshot, hero, position, height, weight, career, season):
+    def __init__(self, player_id, name, team, headshot, hero, position, sweater, height, weight, career, season):
         self.player_id = player_id
         self.name = name
         self.team = team
         self.headshot = headshot
         self.hero = hero
         self.position = position
+        self.sweater = sweater
         self.height = height
         self.weight = weight
         # self.age = age
@@ -20,6 +21,7 @@ class PlayerModel:
             "Headshot": self.headshot,
             "Hero": self.hero,
             "Position": self.position,
+            "Jersey Number": self.sweater,
             "Height": self.height,
             "Weight": self.weight,
             # "Age": self.age,
