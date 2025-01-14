@@ -12,18 +12,18 @@ class NhlCollectorBase:
     def __init__(self):
         self.nhl_connector = NhlConnector()
 
-        def send(self, model, base_url):
-            print(f"Sending {base_url} to Mongo Database")
-            # Update the database here
+    def send(self, model, base_url):
+        # Use this method to send data into the database
+        print(f"Sending data to {base_url} Mongo Database")
+        print(model)
+
 
 
 class PlayerCollector(NhlCollectorBase):
     def __init__(self):
         super().__init__()
-        # self.players_endpoint = Constants.get_players_rest_endpoint()
+        self.players_endpoint = Constants.get_players_rest_endpoint()
 
     def collect_and_send(self):
        logging.info(NhlConnector.get_player_stats(self))
-
-        # for player in players:
-        #     logger.info(player.to_json())
+       NhlConnector.get_player_stats(self)

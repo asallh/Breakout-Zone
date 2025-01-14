@@ -5,7 +5,7 @@ import os.path
 class MissingEnvironmentVariableError(EnvironmentError):
     def __init__(self, env_var_name):
         self.message = f"Required environment varaible {env_var_name} is not set"
-        super.__init__(self.message)
+        super().__init__(self.message)
 
 class Constants:
     config = configparser.ConfigParser()
@@ -19,6 +19,13 @@ class Constants:
         if env_var_value is None and required is True:
             raise MissingEnvironmentVariableError(env_var)
         return env_var_value
+
+    @classmethod
+    def get_environment(cls):
+        env = os.getenv("ENVIRONMENT")
+        if not env:
+            raise MissingEnvironmentVariableError("ENVIRONMENT")
+        return env
 
     @classmethod
     def get_players_rest_endpoint(cls):

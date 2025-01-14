@@ -27,3 +27,9 @@ class PlayerModel:
 
     def debug(self):
         print(self.to_json())
+
+    def get_season_stats(self):
+        return self.season
+
+    def get_career_stats(self):
+        return self.career

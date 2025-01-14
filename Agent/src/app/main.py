@@ -25,12 +25,6 @@ def player_collection_job():
     logging.info("player_collection_job started")
     PlayerCollector().collect_and_send()
 
-def run_get_player_stats():
-    connector = NhlConnector()
-    players_stats = connector.get_player_stats()  # Pass None or appropriate collector instance
-    logger.info(players_stats)
-    # for player in players_stats:
-    #     print(player.to_json())
 
 def main():
     scheduler = BlockingScheduler()
