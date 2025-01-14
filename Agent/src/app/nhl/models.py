@@ -9,24 +9,22 @@ class PlayerModel:
         self.sweater = sweater
         self.height = height
         self.weight = weight
-        # self.age = age
         self.career = career
         self.season = season
 
     def to_json(self):
         return {
-            "PlayerId": self.player_id,
-            "Name": self.name,
-            "Team": self.team,
-            "Headshot": self.headshot,
-            "Hero": self.hero,
-            "Position": self.position,
-            "Jersey Number": self.sweater,
-            "Height": self.height,
-            "Weight": self.weight,
-            # "Age": self.age,
-            "Career Stats": self.career,
-            "Season Stats": self.season
+            "player_id": str(self.player_id),  # Ensure player_id is string
+            "name": self.name,
+            "team": self.team,
+            "headshot": self.headshot,
+            "hero": self.hero,
+            "position": self.position,
+            "sweater": self.sweater,
+            "height": self.height,
+            "weight": self.weight,
+            "career_totals": self.career,
+            "season_totals": self.season
         }
 
     def debug(self):

@@ -16,11 +16,18 @@ class NhlCollectorBase:
         self.nhl_connector = NhlConnector()
 
     def send(self, model, base_url):
-        # Use this method to send data into the database
         packet = model.to_json()
-        logging.info(f"sending to {base_url + self.__extension_URL}:{packet}")
-        response = requests.post(base_url + self.__extension_URL, json=packet)
-        print(f"Sending data to {base_url} Mongo Database")
+        url = base_url + self.__extension_URL
+        logging.info(f"Sending to {url}: {packet}")
+        
+        try:
+            response = requests.post(url, json=packet)
+            response.raise_for_status()  # Raises an exception for 4XX/5XX status codes
+            logging.info(f"Successfully sent player data. Status: {response.status_code}")
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Failed to send player data: {str(e)}")
+            return None
 
 
 

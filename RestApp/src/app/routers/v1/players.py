@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, HTTPException
 from typing import List
 from app.models.players import PlayerMasterDocument
@@ -9,10 +11,16 @@ router = APIRouter()
 
 @router.post("/", response_model=PlayerMasterDocument)
 async def create_player(player: PlayerMasterDocument):
-    if player.team and not await Team.find_one(Team.name == player.team):
-        raise HTTPException(status_code=404, detail="Team not found")
-    await player.create()
-    return player
+    try:
+        # Remove team validation temporarily since Team model isn't fully implemented
+        # if player.team and not await Team.find_one(Team.name == player.team):
+        #     raise HTTPException(status_code=404, detail="Team not found")
+        
+        await player.create()
+        return player
+    except Exception as e:
+        logging.error(f"Error creating player: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/", response_model=List[PlayerMasterDocument])

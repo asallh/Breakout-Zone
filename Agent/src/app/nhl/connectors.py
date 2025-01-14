@@ -1,3 +1,4 @@
+import logging
 from venv import logger
 
 import requests
@@ -66,6 +67,7 @@ class NhlConnector:
             if teams_response.status_code == 200:
                 teams_count += 1
                 teams_data = teams_response.json()
+                logging.info(f"Successfully fetched team data for {team}")
                 # iterating for the skaters
                 for skater in teams_data.get("skaters", []):
                     player_id = skater.get("playerId")
@@ -102,16 +104,17 @@ class NhlConnector:
                             logger.info(
                                 f"Successfully fetched player data for goalie: {goalie['firstName']['default']} {goalie['lastName']['default']}")
                             player_model = PlayerModel(
-                                player_id=goalie_data.get("playerId"),
-                                name=f"{goalie_data.get('firstName')['default']} {goalie_data.get('lastName')['default']}",
+                                player_id=player_data.get("playerId"),
+                                name=f"{player_data.get('firstName')['default']} {player_data.get('lastName')['default']}",
                                 team=team,
-                                headshot=goalie_data.get("headshot"),
-                                hero=goalie_data.get("hero"),
-                                position=goalie_data.get("position"),
-                                height=goalie_data.get("heightInInches"),
-                                weight=goalie_data.get("weightInPounds"),
-                                career=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
-                                season=goalie_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
+                                headshot=player_data.get("headshot"),
+                                hero=player_data.get("heroImage"),
+                                position=player_data.get("position"),
+                                sweater=player_data.get("sweaterNumber"),
+                                height=player_data.get("heightInInches"),
+                                weight=player_data.get("weightInPounds"),
+                                career=player_data.get("featuredStats", {}).get("regularSeason", {}).get("career", {}),
+                                season=player_data.get("featuredStats", {}).get("regularSeason", {}).get("subSeason", {})
                             )
                             # Sending to DB
                             collector.send(player_model, Constants.get_players_rest_endpoint())
